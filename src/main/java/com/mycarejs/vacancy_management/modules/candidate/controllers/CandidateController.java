@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/candidate")
+@Tag(name = "Candidate", description = "Candidate information")
 public class CandidateController {
 
   @Autowired
@@ -46,7 +47,14 @@ public class CandidateController {
   private ListAllJobsByFilterUseCase listAllJobsByFilterUseCase;
 
   @PostMapping("/")
-  @PreAuthorize("hasRole('CANDIDATE')")
+  // @PreAuthorize("hasRole('CANDIDATE')")
+  @Operation(summary = "Candidate registration", description = "This function is responsible for registering a new candidate.")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", content = {
+          @Content(schema = @Schema(implementation = CandidateEntity.class))
+      }),
+      @ApiResponse(responseCode = "400", description = "User already exists")
+  })
   public ResponseEntity<Object> create(@Valid @RequestBody CandidateEntity candidateEntity) {
 
     try {
@@ -59,7 +67,6 @@ public class CandidateController {
 
   @GetMapping("/")
   @PreAuthorize("hasRole('CANDIDATE')")
-  @Tag(name = "Candidate", description = "Candidate information")
   @Operation(summary = "Candidate profile", description = "This function is responsible for searching for information about the candidate's profile.")
   @ApiResponses({
       @ApiResponse(responseCode = "200", content = {
