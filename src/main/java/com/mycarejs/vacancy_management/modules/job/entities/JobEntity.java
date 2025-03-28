@@ -7,6 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.mycarejs.vacancy_management.modules.company.entities.CompanyEntity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,8 +34,11 @@ public class JobEntity {
   private UUID id;
 
   @NotBlank(message = "Level needs to be specified")
+  @Schema(example = "SENIOR", requiredMode = RequiredMode.REQUIRED)
   private String level;
+  @Schema(example = "GYMPass, Health Insurance", requiredMode = RequiredMode.REQUIRED)
   private String benefits;
+  @Schema(example = "Design vacancy")
   private String description;
 
   @ManyToOne()
