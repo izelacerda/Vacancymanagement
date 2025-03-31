@@ -2,8 +2,6 @@ package com.mycarejs.vacancy_management.modules.candidate.useCases;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -48,7 +46,6 @@ public class ApplyJobCandidateUseCaseTest {
 
     } catch (Exception e) {
       assertInstanceOf(UserNotFoundException.class, e);
-      // TODO: handle exception
     }
   }
 
@@ -66,7 +63,6 @@ public class ApplyJobCandidateUseCaseTest {
       applyJobCandidateUseCase.execute(idCandidate, null);
     } catch (Exception e) {
       assertInstanceOf(JobNotFoundException.class, e);
-      // TODO: handle exception
     }
 
   }

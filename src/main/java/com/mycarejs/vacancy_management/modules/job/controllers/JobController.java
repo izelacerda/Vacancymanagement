@@ -8,7 +8,6 @@ import com.mycarejs.vacancy_management.modules.job.entities.JobEntity;
 import com.mycarejs.vacancy_management.modules.job.useCases.CreateJobUseCase;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
