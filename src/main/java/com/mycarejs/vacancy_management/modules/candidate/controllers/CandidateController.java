@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mycarejs.vacancy_management.modules.candidate.dto.ProfileCandidateResponseDTO;
 import com.mycarejs.vacancy_management.modules.candidate.entities.CandidateEntity;
+import com.mycarejs.vacancy_management.modules.candidate.useCases.ApplyJobCandidateUseCase;
 import com.mycarejs.vacancy_management.modules.candidate.useCases.CreateCandidateUseCase;
 import com.mycarejs.vacancy_management.modules.candidate.useCases.ListAllJobsByFilterUseCase;
 import com.mycarejs.vacancy_management.modules.candidate.useCases.ProfileCandidateUseCase;
@@ -45,6 +46,9 @@ public class CandidateController {
 
   @Autowired
   private ListAllJobsByFilterUseCase listAllJobsByFilterUseCase;
+
+  @Autowired
+  private ApplyJobCandidateUseCase applyJobCandidateUseCase;
 
   @PostMapping("/")
   // @PreAuthorize("hasRole('CANDIDATE')")
@@ -99,4 +103,19 @@ public class CandidateController {
     return this.listAllJobsByFilterUseCase.execute(filter);
   }
 
+  @PostMapping("/job/apply")
+  @PreAuthorize("hasRole('CANDIDATE')")
+  @SecurityRequirement(name = "jwt_auth")
+  @Operation(summary = "candidate apply for a job.", description = "This function is responsible for applying candidates for a job.")
+  public ResponseEntity<Object> applyJob(HttpServletRequest request, @RequestBody UUID idJob) {
+    var idCandidate = request.getAttribute("candidate_id");
+
+    try {
+      var result = this.applyJobCandidateUseCase.execute(UUID.fromString(idCandidate.toString()), idJob);
+      return ResponseEntity.ok().body(result);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+  }
 }
