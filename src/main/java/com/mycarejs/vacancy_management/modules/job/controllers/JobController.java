@@ -45,14 +45,14 @@ public class JobController {
 
   public ResponseEntity<Object> create(@Valid @RequestBody CreateJobDTO createJobDTO, HttpServletRequest request) {
     var companyId = request.getAttribute("company_id");
-    var jobEntity = JobEntity.builder()
-        .benefits(createJobDTO.getBenefits())
-        .companyId(UUID.fromString(companyId.toString()))
-        .description(createJobDTO.getDescription()) //
-        .level(createJobDTO.getLevel())
-        .build();
-    // jobEntity.setCompanyId(UUID.fromString(companyId.toString()));
+
     try {
+      var jobEntity = JobEntity.builder()
+          .benefits(createJobDTO.getBenefits())
+          .companyId(UUID.fromString(companyId.toString()))
+          .description(createJobDTO.getDescription()) //
+          .level(createJobDTO.getLevel())
+          .build();
       var result = this.createJobUseCase.execute(jobEntity);
       return ResponseEntity.ok().body(result);
     } catch (Exception e) {
