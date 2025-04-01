@@ -3,9 +3,9 @@ package com.mycarejs.vacancy_management.modules.candidate.useCases;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.mycarejs.vacancy_management.exceptions.UserNotFoundException;
 import com.mycarejs.vacancy_management.modules.candidate.dto.ProfileCandidateResponseDTO;
 import com.mycarejs.vacancy_management.modules.candidate.repositories.CandidateRepository;
 
@@ -18,7 +18,7 @@ public class ProfileCandidateUseCase {
   public ProfileCandidateResponseDTO execute(UUID idCandidate) {
     var candidate = this.candidateRepository.findById(idCandidate)
         .orElseThrow(() -> {
-          throw new UsernameNotFoundException("User not found!");
+          throw new UserNotFoundException();
         });
     var candidateDTO = ProfileCandidateResponseDTO.builder()
         .description(candidate.getDescription())
